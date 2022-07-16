@@ -1,4 +1,4 @@
-import { Button, Col, Form, Input, message, Row, Typography } from "antd"
+import { Button, Col, Form, Input, InputNumber, message, Row, Typography } from "antd"
 import { useContext } from "react"
 import { useNavigate } from "react-router-dom"
 import { AuthContext } from "../../auth/AuthContext"
@@ -64,6 +64,13 @@ const NewItem = () => {
                             rules={[{ required: true, message: 'Please input URL!' }]}
                         >
                             <Input />
+                        </Form.Item>
+                        <Form.Item 
+                            name="stock" 
+                            label={`Stock`}
+                            rules={[{ required: true, message: 'Please input stock' }]}
+                        >
+                            <InputNumber />
                         </Form.Item>
                         <Form.Item >
                             <Button 

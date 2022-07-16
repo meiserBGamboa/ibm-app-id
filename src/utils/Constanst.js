@@ -14,4 +14,8 @@ export const routesApp = [
         link: '/new',
 		name: 'Nuevo',
     },
+    {
+        link: '/min-stock',
+		name: 'Sin Stock',
+    },
 ]

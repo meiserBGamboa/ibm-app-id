@@ -9,6 +9,15 @@ export const getAllItems = ( apiKey ) => {
     return response
 }
 
+export const getMinItems = ( apiKey ) => {
+    const response = apiConnection(
+        'stock-min',
+        { Authorization: apiKey },
+        null
+    )
+    return response
+}
+
 export const createItem = (apiKey, data) => {
     const response = apiConnection( 
 		'items', 

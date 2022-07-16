@@ -3,7 +3,7 @@ import { WarningOutlined } from '@ant-design/icons'
 import React, { useContext, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { AuthContext } from "../../auth/AuthContext"
-import { deleteItem, getAllItems } from "../../services/items"
+import { deleteItem, getMinItems } from "../../services/items"
 import GeneralSpin from "../GlobalComponent/GeneralSpin"
 
 const { Title, Text } = Typography
@@ -18,16 +18,16 @@ const stylePage = {
 
 const DashboardWrapper = () => {
     const {userTestIbm} = useContext(AuthContext)
-    const [dataClips, setDataClips] = useState([])
+    const [dataMins, setDataMins] = useState([])
 	const [loading, setLoading] = useState(false)
     let navigate = useNavigate()
     useEffect(() => {
         const getData = async () => {
-            const items = await getAllItems(userTestIbm.token)
-            console.log(items)
+            const items = await getMinItems(userTestIbm.token)
+            console.log('min: ', items)
             if(!items) return ;
             if(items.entries){
-                setDataClips(items.entries)
+                setDataMins(items.entries)
                 setLoading(true)
             } else {
                 message.error('Error of get list.');
@@ -36,7 +36,7 @@ const DashboardWrapper = () => {
         }
         getData()
         
-    }, [setDataClips, userTestIbm])
+    }, [setDataMins, userTestIbm])
 
     const deleteArticle = async (value) => {
         const respond = await deleteItem(userTestIbm.token, value)
@@ -44,8 +44,8 @@ const DashboardWrapper = () => {
         if(!respond) message.error('Error not respond endpoint')
         if(!respond.id) message.error('Error Articulo no encontrado.')
         else {
-            const articles = dataClips.filter(itm => itm.id !== value.id && itm.rev !== value.rev)
-            setDataClips(articles)
+            const articles = dataMins.filter(itm => itm.id !== value.id && itm.rev !== value.rev)
+            setDataMins(articles)
         }
     }
 
@@ -61,7 +61,7 @@ const DashboardWrapper = () => {
                 style={stylePage.spaceContainer} 
             >
                 {(loading) ? 
-                    dataClips.map ((itm, index) => {
+                    dataMins.map ((itm, index) => {
                         return(
                             <Col key={`col-card-${index}`} xs={22}
                                 sm={8}
